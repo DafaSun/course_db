@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Family bookа</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background-color: #f4f4f4;
+        }
+
+        .form-item {
+            margin-bottom: 10px;
+        }
+
+        form {
+            max-width: 600px;
+            margin: 20px;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: #fff;
+            overflow: auto;
+        }
+
+        label {
+            display: inline-block;
+            width: 180px;
+            text-align: right;
+            margin-right: 10px;
+        }
+
+        input[type="text"],
+        input[type="email"],
+        input[type="date"],
+        select {
+            width: 200px;
+        }
+
+        .popup {
+            margin-top: 20px;
+            border: 1px solid #ccc;
+            padding: 10px;
+            background-color: #eef;
+        }
+
+        input[type="submit"] {
+            padding: 10px 20px;
+            font-size: 16px;
+            margin-left: 190px;
+        }
+
+        #header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        #button-container {
+            display: flex;
+            justify-content: space-around;
+            width: 200px;
+        }
+
+        button {
+            padding: 10px;
+            font-size: 16px;
+        }
+    </style>
+</head>
+<body>
+<h1>Family book</h1>
+        <a href="main">←</a>
+        <h1>
+<h1>Даты</h1>
+<h2>Дни рождения</h2>
+<table border="1">
+    <tr>
+        <th>Дата</th>
+        <th>ID</th>
+        <th>Фамилия</th>
+        <th>Имя</th>
+    </tr>
+    {% for d in date1 %}
+    <tr>
+         {% if d.birthday != None %}
+        <td>{{ d.birthday }}</td>
+        <td>{{ d.id }}</td>
+        <td>{{ d.fcs.surname }}</td>
+        <td>{{ d.fcs.name }}</td>
+        {% endif %}
+    </tr>
+    {% endfor %}
+</table>
+<h2>Дни свадеб</h2>
+<table border="1">
+    <tr>
+        <th>Дата рождения</th>
+        <th>ID мужа</th>
+        <th>Фамилия мужа</th>
+        <th>Имя мужа</th>
+        <th>ID жены</th>
+        <th>Фамилия жены</th>
+        <th>Имя жены</th>
+    </tr>
+    {% for d in date_marriage %}
+    <tr>
+        {% if d.time.begin_time  != None %}
+        <td>{{ d.time.begin_time }}</td>
+        <td>{{ d.husband.id }}</td>
+        <td>{{ d.husband.fcs.surname }}</td>
+        <td>{{ d.husband.fcs.name }}</td>
+        <td>{{ d.wife.id }}</td>
+        <td>{{ d.wife.fcs.surname }}</td>
+        <td>{{ d.wife.fcs.name }}</td>
+        {% endif %}
+    </tr>
+    {% endfor %}
+</table>
+<h2>Дни смерти</h2>
+<table border="1">
+    <tr>
+        <th>Дата</th>
+        <th>ID</th>
+        <th>Фамилия</th>
+        <th>Имя</th>
+    </tr>
+    {% for d in date1 %}
+    <tr>
+        {% if d.day_of_die != None %}
+        <td>{{ d.day_of_die }}</td>
+        <td>{{ d.id }}</td>
+        <td>{{ d.fcs.surname }}</td>
+        <td>{{ d.fcs.name }}</td>
+        {% endif %}
+    </tr>
+    {% endfor %}
+</table>
+</body>
+</html>
+
+
+
+

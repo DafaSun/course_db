@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Family book</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background-color: #f4f4f4;
+        }
+
+        .form-item {
+            margin-bottom: 10px;
+        }
+
+        form {
+            max-width: 600px;
+            margin: 20px;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: #fff;
+            overflow: auto;
+        }
+
+        label {
+            display: inline-block;
+            width: 180px;
+            text-align: right;
+            margin-right: 10px;
+        }
+
+        input[type="text"],
+        input[type="email"],
+        input[type="date"],
+        select {
+            width: 200px;
+        }
+
+        .popup {
+            margin-top: 20px;
+            border: 1px solid #ccc;
+            padding: 10px;
+            background-color: #eef;
+        }
+
+        input[type="submit"] {
+            padding: 10px 20px;
+            font-size: 16px;
+            margin-left: 190px;
+        }
+
+        #header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        #button-container {
+            display: flex;
+            justify-content: space-around;
+            width: 200px;
+        }
+
+        button {
+            padding: 10px;
+            font-size: 16px;
+        }
+    </style>
+</head>
+<body>
+<h1>Family book</h1>
+        <a href="main">←</a>
+        <h1>
+<h1>Информация о человеке</h1>
+
+<form action="{{ url_for('get_person') }}" method="get">
+    <label for="person_id">ID человека:</label>
+    <input type="number" name="person_id" required>
+    <input type="submit" value="Получить информацию">
+</form>
+
+{% if person %}
+<p>ID: {{ person.id }}</p>
+<p>Фамилия: {{ person.fcs.surname }}</p>
+<p>Имя: {{ person.fcs.name }}</p>
+<p>Отчество: {{ person.fcs.patronymic }}</p>
+<p>Девичья фамилия: {{ person.fcs.maiden_name }}</p>
+<p>Дата рождения: {{ person.birthday }}</p>
+<p>Дата смерти: {{ person.day_of_die }}</p>
+<p>Пол: {{ person.gender.gender_name }}</p>
+
+<p>Контактные данные</p>
+{% for c in contact %}
+<p>Номер телефона: {{ c.phone_number }}</p>
+<p>Электронная почта: {{ c.email }}</p>
+{% endfor %}
+
+<p>Образование</p>
+{% for e in education %}
+<p>Уровень образования: {{ e.level }}</p>
+<p>Профессия: {{ e.profession }}</p>
+<p>Начало обучения: {{ e.time.begin_time }}</p>
+<p>Окончание обучения: {{ e.time.end_time }}</p>
+<p>Образовательная организация: {{ e.education_organisation.organisation_name }}</p>
+<p>Страна: {{ e.education_organisation.address.country }}</p>
+<p>Регион: {{ e.education_organisation.address.region }}</p>
+<p>Город: {{ e.education_organisation.address.city }}</p>
+<p>Улица: {{ e.education_organisation.address.street }}</p>
+<p>Дом: {{ e.education_organisation.address.house }}</p>
+{% endfor %}
+
+<p>Работа</p>
+{% for w in work %}
+<p>Должность: {{ w.post }}</p>
+<p>Начало работы: {{ w.time.begin_time }}</p>
+<p>Окончание работы: {{ w.time_end_time }}</p>
+<p>Образовательная организация: {{ w.organisation.organisation_name }}</p>
+<p>Страна: {{ w.organisation.address.country }}</p>
+<p>Регион: {{ w.organisation.address.region }}</p>
+<p>Город: {{ w.organisation.address.city }}</p>
+<p>Улица: {{ w.organisation.address.street }}</p>
+<p>Дом: {{ w.organisation.address.house }}</p>
+
+{% endfor %}
+
+<p>Место жительства</p>
+{% for r in residence %}
+<p>Страна: {{ r.address.country }}</p>
+<p>Регион: {{ r.address.region }}</p>
+<p>Город: {{ r.address.city }}</p>
+<p>Улица: {{ r.address.street }}</p>
+<p>Дом: {{ r.address.house }}</p>
+<p>Квартира: {{ r.address.float }}</p>
+<p>Начало проживания: {{ r.time.begin_time }}</p>
+<p>Окончание проживания: {{ r.time.end_time }}</p>
+{% endfor %}
+
+<p>Брак</p>
+{% for m in marriage %}
+{% if m.husband.id==person_id %}
+<p>ID супруга/и: {{ m.wife.id }}</p>
+{% endif %}
+{% if m.wife.id==person_id %}
+<p>ID супруга/и: {{ m.husband.id }}</p>
+{% endif %}
+<p>Начало брака: {{ m.time.begin_time  }}</p>
+<p>Окончание брака: {{ m.time.end_time  }}</p>
+{% endfor %}
+
+<p>Родители</p>
+{% for p in parent %}
+{% if p.parent_id.gender=='Женский' %}
+<p>ID мамы: {{ p.parent_id.id }}</p>
+{% endif %}
+{% if p.parent_id.gender=='Мужской' %}
+<p>ID папы: {{ p.parent_id.id }}</p>
+{% endif %}
+{% endfor %}
+{% endif %}
+</body>
+</html>

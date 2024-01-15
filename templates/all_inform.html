@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Family book</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            background-color: #f4f4f4;
+        }
+
+        #header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        #button-container {
+            display: flex;
+            justify-content: space-around;
+            width: 200px;
+        }
+
+        button {
+            padding: 10px;
+            font-size: 16px;
+        }
+
+    </style>
+</head>
+<body>
+
+
+<h1>Family book</h1>
+<a href="main">←</a>
+    <h1>Основная информация о всех людях</h1>
+    <table border="1">
+        <tr>
+            <th>ID</th>
+            <th>Фамилия</th>
+            <th>Имя</th>
+            <th>Отчество</th>
+            <th>Девичья фамилия</th>
+            <th>Пол</th>
+            <th>Дата рождения</th>
+            <th>Дата смерти</th>
+        </tr>
+        {% for person in people %}
+        <tr>
+            <td>{{ person.id }}</td>
+            <td>{{ person.fcs.surname }}</td>
+            <td>{{ person.fcs.name }}</td>
+            <td>{{ person.fcs.patronymic }}</td>
+            <td>{{ person.fcs.maiden_name }}</td>
+            <td>{{ person.gender.gender_name }}</td>
+            <td>{{ person.birthday }}</td>
+            <td>{{ person.day_of_die }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+    <br>
+<!--    <form action="/export_pdf" method="post">-->
+<!--        <button type="submit">Выгрузить в PDF</button>-->
+<!--    </form>-->
+<!--    <br>-->
+<!--    <br>-->
+<!--    <form action="/export_word" method="post">-->
+<!--        <button type="submit">Выгрузить в Word</button>-->
+<!--    </form>-->
+
+</body>
+</html>
